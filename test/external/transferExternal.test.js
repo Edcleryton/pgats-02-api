@@ -5,7 +5,7 @@ const { expect } = require('chai');
 // Testes
 describe('Transfer', () => {
     describe('POST /transfers', () => {
-        it.only('Quando informo remetente e destinatario inexistentes recebo 400', async () => {
+        it('Quando informo remetente e destinatario inexistentes recebo 400', async () => {
             // 1) Capturar o Token
             const respostaLogin = await request('http://localhost:3000')
                 .post('/users/login')
