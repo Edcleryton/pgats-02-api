@@ -22,7 +22,7 @@ describe('Transfer Controller', () => {
                 });
 
             token = respostaLogin.body.token;
-        })
+        });
 
         it('Quando informo remetente e destinatario inexistentes recebo 400', async () => {
             const resposta = await request(app)
