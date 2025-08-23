@@ -45,7 +45,7 @@ describe('Transfer Controller', () => {
             sinon.restore();
         });
 
-        it.only('Usando Mocks: Quando informo valores válidos eu tenho sucesso com 201 CREATED', async () => {
+        it('Usando Mocks: Quando informo valores válidos eu tenho sucesso com 201 CREATED', async () => {
             // Mocar apenas a função transfer do Service
             const transferServiceMock = sinon.stub(transferService, 'transfer');
             transferServiceMock.returns({ 
