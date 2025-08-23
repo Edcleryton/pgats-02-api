@@ -45,7 +45,11 @@ describe('Transfer Controller', () => {
             sinon.restore();
         });
 
-        it('Usando Mocks: Quando informo valores válidos eu tenho sucesso com 201 CREATED', async () => {
+        it.only('Usando Mocks: Quando informo valores válidos eu tenho sucesso com 201 CREATED', async () => {
+            // Preparando os Dados
+                // Carregar o arquivo
+                // Preparar a forma de ignorar os campos dinamicos
+
             // Mocar apenas a função transfer do Service
             const transferServiceMock = sinon.stub(transferService, 'transfer');
             transferServiceMock.returns({ 
@@ -64,9 +68,13 @@ describe('Transfer Controller', () => {
                 });
             
             expect(resposta.status).to.equal(201);
+            
+            // Um expect para comparar a Resposta.body com a String contida no arquivo
             expect(resposta.body).to.have.property('from', 'julio');
             expect(resposta.body).to.have.property('to', 'priscila');
             expect(resposta.body).to.have.property('value', 100);
+
+            console.log(resposta.body)
 
             // Reseto o Mock
             sinon.restore();
