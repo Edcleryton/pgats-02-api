@@ -1,6 +1,11 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const userService = require('../service/userService');
+const authenticateToken = require('../middleware/authenticateToken');
+
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) throw new Error('FATAL: JWT_SECRET não definido. Crie um arquivo .env com base em .env.example');
 
 router.post('/register', (req, res) => {
   const { username, password, favorecidos } = req.body;
@@ -18,17 +23,14 @@ router.post('/login', (req, res) => {
   if (!username || !password) return res.status(400).json({ error: 'Usuário e senha obrigatórios' });
   try {
     const user = userService.loginUser({ username, password });
-    // Gerar token JWT
-    const jwt = require('jsonwebtoken');
-    const SECRET = process.env.JWT_SECRET || 'secretdemo';
-    const token = jwt.sign({ username: user.username }, SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '1h' });
     res.json({ user, token });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 
-router.get('/', (req, res) => {
+router.get('/', authenticateToken, (req, res) => {
   res.json(userService.listUsers());
 });
 

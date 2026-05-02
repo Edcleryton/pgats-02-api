@@ -2,6 +2,8 @@ const { users } = require('../model/userModel');
 const { transfers } = require('../model/transferModel');
 
 function transfer({ from, to, value }) {
+  if (!value || value <= 0) throw new Error('Valor deve ser maior que zero');
+  if (from === to) throw new Error('Remetente e destinatário devem ser diferentes');
   const sender = users.find(u => u.username === from);
   const recipient = users.find(u => u.username === to);
   if (!sender || !recipient) throw new Error('Usuário remetente ou destinatário não encontrado');

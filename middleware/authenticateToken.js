@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const SECRET = process.env.JWT_SECRET || 'secretdemo';
+const SECRET = process.env.JWT_SECRET;
+if (!SECRET) throw new Error('FATAL: JWT_SECRET não definido. Crie um arquivo .env com base em .env.example');
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
